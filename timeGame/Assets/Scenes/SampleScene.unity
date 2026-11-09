@@ -5726,9 +5726,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 324ffa1f736fad945b01bc39069c18e7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1501433860}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 324ffa1f736fad945b01bc39069c18e7, type: 3}
+--- !u!4 &735528523 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 324ffa1f736fad945b01bc39069c18e7, type: 3}
+  m_PrefabInstance: {fileID: 735528522}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &748821285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10929,6 +10937,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 25030a8cd9720c74dbcaba31c6930f3d, type: 3}
   m_PrefabInstance: {fileID: 1500879711}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1501433859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1501433860}
+  - component: {fileID: 1501433861}
+  m_Layer: 0
+  m_Name: shootpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1501433860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501433859}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.98, y: 1.53, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 735528523}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1501433861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501433859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec2949002e0711f4daef58d5cddc7336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cannon
+  shooter: {fileID: 1501433859}
+  player: {fileID: 100575352}
+  cannonBall: {fileID: 7524736455402982590, guid: 335fbbd0e9dcc6844a3a10c6f40529b3, type: 3}
 --- !u!1001 &1506212162
 PrefabInstance:
   m_ObjectHideFlags: 0
