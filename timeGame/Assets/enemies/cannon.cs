@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assemblies;
 
 public class cannon : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class cannon : MonoBehaviour
     public GameObject cannonBall;
     public Transform playerPos;
     public Transform cannonBallSpawn;
-    public float range = 30;
+    public float range = 60;
 
 
     void Start()
@@ -25,8 +26,15 @@ public class cannon : MonoBehaviour
 
         if(hasattacked && distance < range)
         {
-            Instantiate(cannonBall, cannonBallSpawn.position, cannonBallSpawn.rotation);
+
+         
+            GameObject currentBall = Instantiate(cannonBall, cannonBallSpawn.position, cannonBallSpawn.rotation);
+            
+            cannonball shoot = currentBall.GetComponent<cannonball>();
+            shoot.Shoot(cannonBallSpawn);
+
             StartCoroutine(startShooting());
+
         }
     }
     private IEnumerator startShooting()

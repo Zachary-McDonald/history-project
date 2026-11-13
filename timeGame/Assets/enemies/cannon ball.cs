@@ -1,14 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 public class cannonball : MonoBehaviour
 {
-    
+    public float force;
+    public Rigidbody rb;
     void Start()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
+       
         if (rb != null)
         {
            
+
         }
     }
 
@@ -16,5 +19,16 @@ public class cannonball : MonoBehaviour
     void Update()
     {
         
+    }
+    public void Shoot(Transform direction)
+    {
+        rb.AddForce(direction.forward * force, ForceMode.Impulse);
+        StartCoroutine(death());
+    }
+    public IEnumerator death()
+    {
+        yield return new WaitForSeconds(4);
+        
+        Destroy(gameObject);
     }
 }
