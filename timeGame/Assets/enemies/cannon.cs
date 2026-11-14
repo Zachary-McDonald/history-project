@@ -10,6 +10,7 @@ public class cannon : MonoBehaviour
     public Transform playerPos;
     public Transform cannonBallSpawn;
     public float range = 60;
+    public EnemyController enemyController;
 
 
     void Start()
@@ -22,7 +23,7 @@ public class cannon : MonoBehaviour
     {
        
         float distance = Vector3.Distance(transform.position, playerPos.position);
-        Debug.Log(distance);
+      
 
         if(hasattacked && distance < range)
         {

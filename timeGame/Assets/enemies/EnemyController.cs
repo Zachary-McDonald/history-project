@@ -21,15 +21,23 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
 
     private bool isAttacking = false;
+    
     private float nextAttackTime;
+    public float stationDistance;
+
+    public GameObject weapon;
+
+    public string enemyType;
+    public string enemySubType;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
 
         if (animator == null)
+        {
             animator = GetComponentInChildren<Animator>();
-
+        }
         if (player == null)
         {
             GameObject obj = GameObject.FindGameObjectWithTag("Player");
@@ -37,45 +45,73 @@ public class EnemyController : MonoBehaviour
             if (obj != null)
                 player = obj.transform;
         }
+        
+        if(enemyType.Equals("CannonGuy") && weapon != null)
+        {
+            animator.SetBool("stationed", true);
+            weapon.SetActive(false);
+        }
+        
     }
 
     void Update()
     {
         if (player == null || !agent.isOnNavMesh)
-            return;
-
-        float distance = Vector3.Distance(
-            transform.position,
-            player.position
-        );
-
-        // Let the attack sequence finish uninterrupted
-        if (isAttacking)
         {
-            FacePlayer();
             return;
         }
 
-        // Outside detection range
-        if (distance > chaseRadius)
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if (enemyType.Equals("SwordGuy"))
         {
-            StopMoving();
-            return;
-        }
+            if (isAttacking)
+            {
+                FacePlayer();
+                return;
+            }
 
-        // Inside attack range
-        if (distance <= attackRadius)
+            // Outside detection range
+            if (distance > chaseRadius)
+            {
+                StopMoving();
+                return;
+            }
+
+            // Inside attack range
+            if (distance <= attackRadius)
+            {
+                StopMoving();
+
+                if (Time.time >= nextAttackTime)
+                    StartCoroutine(AttackSequence());
+
+                return;
+            }
+            Chase();
+        }
+        else if(enemyType.Equals("CannonGuy"))
         {
-            StopMoving();
-
-            if (Time.time >= nextAttackTime)
-                StartCoroutine(AttackSequence());
-
-            return;
+            if(distance <= stationDistance)
+            {
+                Debug.Log(stationDistance);
+                animator.SetBool("stationed", false);
+                enemyType = enemySubType;
+                if(weapon != null)
+                {
+                    weapon.SetActive(true);
+                }
+            }
         }
+        else if(enemyType.Equals("GunGuy"))
+        {
 
-        // Otherwise chase
-        Chase();
+        }
+       
+        
+
+      
+        
     }
 
     void Chase()
