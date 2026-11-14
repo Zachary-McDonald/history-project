@@ -30,6 +30,9 @@ public class EnemyController : MonoBehaviour
     public string enemyType;
     public string enemySubType;
 
+    public GameObject bulletprefab;
+    public Transform firePoint;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -51,6 +54,7 @@ public class EnemyController : MonoBehaviour
             animator.SetBool("stationed", true);
             weapon.SetActive(false);
         }
+        
         
     }
 
@@ -94,7 +98,7 @@ public class EnemyController : MonoBehaviour
         {
             if(distance <= stationDistance)
             {
-                Debug.Log(stationDistance);
+               
                 animator.SetBool("stationed", false);
                 enemyType = enemySubType;
                 if(weapon != null)
@@ -105,8 +109,25 @@ public class EnemyController : MonoBehaviour
         }
         else if(enemyType.Equals("GunGuy"))
         {
-
+            if(distance < chaseRadius)
+            {
+                FacePlayer();
+                animator.SetBool("ShootCharge",true);
+                Debug.Log(distance);
+                chargeDuration += Time.deltaTime;
+                if(chargeDuration >= attackCooldown)
+                {
+                    shoot();
+                    chargeDuration = 0;
+                }
+                
+            }
+            else
+            {
+                animator.SetBool("ShootCharge", false);
+            }
         }
+       
        
         
 
@@ -167,6 +188,7 @@ public class EnemyController : MonoBehaviour
                 StopMoving();
         }
     }
+    
 
     void FacePlayer()
     {
@@ -184,4 +206,15 @@ public class EnemyController : MonoBehaviour
             );
         }
     }
+    void shoot()
+    {
+        animator.SetTrigger("Shoot");
+        Vector3 direction = (player.position - firePoint.position);
+        direction.y = 0;
+        direction = direction.normalized;
+
+        GameObject bullet = Instantiate( bulletprefab, firePoint.position,Quaternion.LookRotation(direction));
+
+    }
+
 }
