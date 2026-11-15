@@ -113,7 +113,7 @@ public class EnemyController : MonoBehaviour
             {
                 FacePlayer();
                 animator.SetBool("ShootCharge",true);
-                Debug.Log(distance);
+                
                 chargeDuration += Time.deltaTime;
                 if(chargeDuration >= attackCooldown)
                 {

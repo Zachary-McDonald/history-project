@@ -15,6 +15,7 @@ public class player : MonoBehaviour
     private Transform playerCamera;
     private InputAction playerMoveAction;
     private InputAction playerRoll;
+    private InputAction playerAttack;
    
 
     private float walkSpeed = 10f;
@@ -37,7 +38,8 @@ public class player : MonoBehaviour
     private Vector3 rollDirection;
     public float rollCooldown = 1f;
     private bool canRoll = true;
-
+    private bool canMove = true;
+    private bool canAttack = true;
 
 
     private Vector2 playermoveAmount;
@@ -52,6 +54,7 @@ public class player : MonoBehaviour
         playermoveAmount = playerMoveAction.ReadValue<Vector2>();
         playerMoveAndRotate();
         jump();
+        attack();
         verticalVelocity += gravity * Time.deltaTime;
        
 
@@ -68,6 +71,7 @@ public class player : MonoBehaviour
     {
         playerMoveAction = InputSystem.actions.FindAction("Move");
         playerRoll = InputSystem.actions.FindAction("Jump");
+        playerAttack = InputSystem.actions.FindAction("Attack");
        
     }
     private void OnDisable()
@@ -89,7 +93,7 @@ public class player : MonoBehaviour
 
         animator.SetFloat("speed", playerDirection.magnitude);
 
-        if (playerDirection.magnitude >= 0.1f)
+        if (playerDirection.magnitude >= 0.1f && canMove)
         {
             float targetAngle = Mathf.Atan2(
                 playerDirection.x, playerDirection.z
@@ -172,6 +176,29 @@ public class player : MonoBehaviour
 
         canRoll = true;
     }
+    private void attack()
+    {
+        if(playerAttack.WasPressedThisFrame() && canAttack)
+        {
+            Debug.Log("attack");
+            animator.SetTrigger("Attacking");
+            canRoll = false;
+            canMove = false;
+            canAttack = false;
+            StartCoroutine(attackTime());
+            
+            
+        }
+    }
+    private IEnumerator attackTime()
+    {
+        yield return new WaitForSeconds(1f);
+        canRoll = true;
+        canMove = true;
+        canAttack = true;
+
+    }
+
 
 
 }
